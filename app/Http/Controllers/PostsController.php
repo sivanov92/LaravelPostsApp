@@ -14,7 +14,11 @@ class PostsController extends Controller
     public function index()
     {
         //
-        $posts =  Post::all();
+
+        $key = 'POSTS.ALL';
+        $posts =  cache()->remember($key,now()->addMinutes(5),function(){
+           return  Post::all();
+        });
         return view('posts.index')->with('posts',$posts);
     }
 
@@ -46,6 +50,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->save();
+        cache()->flush();
         return redirect('/posts')->with('sucess','Post Created');
 
     }
@@ -58,8 +63,13 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-      $post = Post::find($id);
-      return view('posts.show')->with('post',$post);
+      $key = 'POSTS.ID.'.$id;
+      $post_res = cache()->remember($key,now()->addMinutes(5),function($id){
+         $post = Post::all();
+         return $post->find($id);
+          
+      });
+      return view('posts.show')->with('post',$post_res);
     }
 
     /**
@@ -94,6 +104,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->save();
+        cache()->flush();
         return redirect('/posts')->with('success','Post Updated');
 
     }
@@ -109,6 +120,7 @@ class PostsController extends Controller
         //
         $post = Post::find($id);
         $post->delete();
+        cache()->flush();
         return redirect('/posts')->with('success','Post Deleted');
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,21 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/about',function(){
-    return view('pages.about');
-});*/
-
-use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PostsApiController;
 use App\Http\Controllers\PostsController;
 
-Route::get('/',[PagesController::class,'index']);
+Route::get('/',[PostsController::class,'index']);
 
 Route::resource('posts',PostsController::class);
 
-//Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Api routes
+Route::get('api',[PostsApiController::class,'getAll']);
+Route::get('api/{id}',[PostsApiController::class,'getByID']);

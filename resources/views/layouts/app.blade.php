@@ -26,7 +26,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-
+                <a href="{{route('posts.create')}}">
+                   <div class="btn btn-primary">Add a post</div> 
+                </a>
             </div>
         </nav>
 
