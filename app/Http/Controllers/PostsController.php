@@ -64,7 +64,7 @@ class PostsController extends Controller
     public function show($id)
     {
       $key = 'POSTS.ID.'.$id;
-      $post_res = cache()->remember($key,now()->addMinutes(5),function($id){
+      $post_res = cache()->remember($key,now()->addMinutes(5),function()use($id){
          $post = Post::all();
          return $post->find($id);
           

@@ -17,7 +17,7 @@ class PostsApiController extends Controller
    } 
    public function getByID(int $id){
     $key = self::CACHE_KEY.'.ID.'.$id;
-    return  cache()->remember($key,now()->addMinutes(5),function($id){
+    return  cache()->remember($key,now()->addMinutes(5),function() use($id){
         $posts = Post::all();
         return $posts->find($id);
     });
