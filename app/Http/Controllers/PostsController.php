@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Support\Arr;
 class PostsController extends Controller
 {
     /**
@@ -29,7 +31,8 @@ class PostsController extends Controller
      */
     public function create()
     { 
-      return view('posts.create');
+       $categories = Category::all();
+      return view('posts.create')->with('categories',$categories);
     }
 
     /**
@@ -45,11 +48,21 @@ class PostsController extends Controller
             'title'=>'required',
             'body'=>'required'
         ]);
-
+        $categories= Category::all();
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $cat_list=array();
+        //dd($categories);
+        //dump($request->all());
+        foreach($categories as $category){
+         if($request->has('CatId_'.$category->id))
+          {
+           array_push($cat_list,$category->id);
+          }       
+        }
         $post->save();
+        $post->categories()->attach($cat_list);
         cache()->flush();
         return redirect('/posts')->with('sucess','Post Created');
 
@@ -62,14 +75,25 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    {      
       $key = 'POSTS.ID.'.$id;
       $post_res = cache()->remember($key,now()->addMinutes(5),function()use($id){
          $post = Post::all();
          return $post->find($id);
           
       });
-      return view('posts.show')->with('post',$post_res);
+      $category_names = array();
+      $categories=$post_res->categories;
+      if (count($categories)>0)
+       {
+        for ($i=0;$i<count($categories);$i++)
+          {
+            $name = $categories[$i]->getAttributes();
+            array_push($category_names,$name['name']);
+          }
+       }
+       //dd($category_names);
+      return view('posts.show')->with(['post'=>$post_res,'categories'=>$category_names]);
     }
 
     /**

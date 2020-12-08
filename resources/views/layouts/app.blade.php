@@ -26,11 +26,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                @if(count(Category::all())>0)
                 <a href="{{route('posts.create')}}">
                    <div class="btn btn-primary">Add a post</div> 
                 </a>
-                @endif
                 <a href="{{route('categories.create')}}">
                     <div class="btn btn-primary">Add a category</div> 
                  </a>
