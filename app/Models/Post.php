@@ -11,4 +11,7 @@ class Post extends Model
     protected $table = 'posts';
     public $primaryKey = 'id';
     public $timestamps = true;
+    public function categories(){
+        return $this->belongsToMany(Category::class, 'post_categories');
+    }
 }
