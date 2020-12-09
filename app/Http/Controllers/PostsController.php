@@ -52,6 +52,8 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->post_date = $request->input('date');
+        $post->post_time = $request->input('time');
         $cat_list=array();
         //dd($categories);
         //dump($request->all());

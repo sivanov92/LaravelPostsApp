@@ -17,11 +17,13 @@
       <input type="text" class="form-control" value="{{$category->name}}" aria-label="Text input with checkbox">
     </div>
     @endforeach
-    <textarea name="body" class = "form-control" id="body" cols="30" rows="10" placeholder=Post Body""></textarea>
+    <textarea name="body" class = "form-control" id="body" cols="30" rows="10" placeholder="Post Body"></textarea>
     <script>
       CKEDITOR.replace( 'body' );
-</script>
-
+    </script>
+     <input type="date" id="date" name="date">
+     <input type="time" id="time" name="time">
+     <br>
     <input type="submit" value="Send" class="btn btn-primary">
     </div>
  </form>

@@ -26,6 +26,7 @@ Route::resource('posts',PostsController::class);
 //Api routes
 Route::get('api',[PostsApiController::class,'getAll']);
 Route::get('api/{id}',[PostsApiController::class,'getByID']);
+Route::post('api',[PostsApiController::class,'AddPost']);
 
 Route::get('categories/create',[CategoryController::class,'create'])->name('categories.create');
 Route::post('categories/store',[CategoryController::class,'store'])->name('categories.store');

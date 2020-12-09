@@ -7,7 +7,7 @@
         <a href="/posts/{{$post->id}}">
         <div class="container border mt-3">
         <h3>{{$post->title}}</h3>
-        <small>Written on {{$post->created_at}}</small>
+        <small>Written on {{$post->post_date}} {{$post->post_time}}</small>
         </div>
         </a>
        @endforeach
